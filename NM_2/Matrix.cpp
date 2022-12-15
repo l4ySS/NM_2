@@ -35,20 +35,24 @@ Vector Matrix::solution()
 	cout << cols << "\n";
 	for (int i = 1; i <= rows; i++) {
 		S = P(i, cols);
+		cout << "\n========\n i = " << i << " \n========\n s = ";
+		cout << S << "\n";
 		for (int k = K0(i); k <= i - 1; k++) {
-			S = S - Q(k, i-k+cols)*Q(k, i - k + cols);
+			S = S - Q(k, i-k+1)*Q(k, i - k + 1);
 		}
 		
-		Q(i, cols) =sqrt(S);
-		cout << "\t i = " << i << " KN = " << KN(i)  << "\n\n\n";
+		Q(i, 1) =sqrt(S);
+		cout << "\t i = " << i << " K0 = " << KN(i)  << "\n\n\n";
 		for (int j = i + 1; j <= KN(i); j++) {
-			S = P(i, j - i + cols);
-			for (int k = K0(i); k <= i - 1; k++) {
-				S = S - Q(k, i - k + cols) * Q(k, j - k + cols);
+			S = P(j, i - j + cols);
+			for (int k = K0(i); k < i - 1; k++) {
+				//if ();
+				S = S - Q(k, i - k + 1) * Q(k, j - k + 1);
 			}
 			
-			Q(i, j - i + cols) = S / Q(i, cols);
-			cout << "\n========\n i = " << i << "\t j = " << j << " \n========\n s = " << S << "\tP = " << P(i, j - i + cols) << "\t Q = " << Q(i, cols) << "\n\n" << Q << "\n\n\n";
+			Q(i, j - i + 1) = S / Q(i, 1);
+	//		cout << "\n========\n i = " << i << "\t j = " << j << " \n========\n s = " << S << "\tQ(k, i - k + 1) = " << Q(K0(i), i - K0(i) + 1)  
+		//		<< "\tQ(k, i - k + 1) = " << Q(K0(i), j - K0(i) + 1) << "\t Q = " << Q(i, cols) << "\n\n" << Q << "\n\n\n";
 		}
 	}
 
@@ -150,4 +154,33 @@ std::ostream& operator<<(std::ostream& out, Matrix& a) {
 	}
 	return out;
 }
-
+// ?????
+//Vector Matrix::solution()
+//{
+//	Matrix Q(rows, cols);
+//	double S;
+//	Matrix P(1, 1);
+//	P = *this;
+//	cout << cols << "\n";
+//	for (int i = 1; i <= rows; i++) {
+//		S = P(i, cols);
+//		for (int k = K0(i); k <= i - 1; k++) {
+//			S = S - Q(k, i - k + cols) * Q(k, i - k + cols);
+//		}
+//
+//		Q(i, cols) = sqrt(S);
+//		cout << "\t i = " << i << " KN = " << KN(i) << "\n\n\n";
+//		for (int j = i + 1; j <= KN(i); j++) {
+//			S = P(i, j - i + cols);
+//			for (int k = K0(i); k <= i - 1; k++) {
+//				S = S - Q(k, i - k + cols) * Q(k, j - k + cols);
+//			}
+//
+//			Q(i, j - i + cols) = S / Q(i, cols);
+//			cout << "\n========\n i = " << i << "\t j = " << j << " \n========\n s = " << S << "\tP = " << P(i, j - i + cols) << "\t Q = " << Q(i, cols) << "\n\n" << Q << "\n\n\n";
+//		}
+//	}
+//
+//	std::cout << Q;
+//	return (data);
+//}
